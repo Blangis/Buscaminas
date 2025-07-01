@@ -1,0 +1,83 @@
+/*Declaro variables css globales*/
+:root {
+  --num-columnas: 40;
+  --num-filas: 20;
+}
+
+h1 {
+  text-align: center;
+  font-family: "Luckiest Guy", cursive;
+  font-weight: 400;
+  font-style: normal;
+  color: rgb(40, 129, 117);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    90deg,
+    rgba(250, 165, 165, 1) 0%,
+    rgba(176, 235, 197, 1) 62%,
+    rgba(219, 209, 116, 1) 100%
+  );
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 2%;
+}
+
+.score {
+  width: 80%;
+  height: 15%;
+  background-color: rgba(241, 7, 7, 0.418);
+  color: white;
+  align-items: center;
+  text-align: center;
+}
+
+.cells {
+  display: grid;
+  grid-template-columns: repeat(var(--num-columnas), 1fr);
+  grid-template-rows: repeat(var(--num-filas), 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 80%;
+  background-color: rgb(182, 171, 171);
+  text-align: center;
+  line-height: 32px;
+}
+
+.cell {
+  border: 1px solid black;
+  aspect-ratio: 1;
+  text-align: center;
+  border-left: 2px solid #d3d3d3;
+  border-top: 2px solid #d3d3d3;
+  border-right: 2px solid #a9a9a9;
+  border-bottom: 2px solid #a9a9a9;
+  cursor: pointer;
+}
+
+.cell.bomba {
+  background-color: #ec1d1d;
+}
+
+.cell.revelada {
+  background-color: aquamarine;
+}
+
+footer {
+  background: linear-gradient(
+    90deg,
+    rgba(250, 165, 165, 1) 0%,
+    rgba(176, 235, 197, 1) 62%,
+    rgba(219, 209, 116, 1) 100%
+  );
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: small;
+}
