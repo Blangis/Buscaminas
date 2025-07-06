@@ -39,6 +39,14 @@ body {
   text-align: center;
 }
 
+.cell {
+  font-family: monospace;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .cells {
   display: grid;
   grid-template-columns: repeat(var(--num-columnas), 1fr);
@@ -80,4 +88,19 @@ footer {
   text-align: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: small;
+}
+
+.dificultad {
+  background: linear-gradient(
+    90deg,
+    rgba(240,160,150,1) 0%,
+    rgba(170,200,178,1) 63%,
+    rgba(100, 50, 40,1) 100%
+  );
+  text-align: center;
+  font-family: Gill Sans;
+  font-size:small;
+  padding : 10px;
+  margin: 10px auto;
+  width: 50%;
 }
