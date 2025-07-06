@@ -125,8 +125,11 @@ function revelarCelda(f, c) {
     juegoActivo = false;
 
     setTimeout(() => {
-      alert("¡BOOM! Has perdido.");
-    }, 100); // Espera 100 milisegundos
+      revelarTodo();
+      mostrarMensajeFinal(
+        "💥 ¡BOOM! Has perdido. ¿Quieres intentarlo de nuevo?"
+      );
+    }, 100);
     return;
   }
 
@@ -169,4 +172,37 @@ function revelarCelda(f, c) {
 function actualizarPuntaje() {
   const puntajeEl = document.getElementById("score");
   puntajeEl.textContent = `Puntaje: ${puntaje}`;
+}
+
+function revelarTodo() {
+  for (let f = 0; f < numFilas; f++) {
+    for (let c = 0; c < numColumnas; c++) {
+      const celda = tablero[f][c];
+      const div = document.getElementById(`cell-${f}-${c}`);
+
+      if (!celda.revelada) {
+        celda.revelada = true;
+        div.classList.add("revelada");
+
+        if (celda.esBomba) {
+          div.classList.add("bomba");
+          div.textContent = "💣";
+        } else if (celda.bombasCerca > 0) {
+          div.textContent = celda.bombasCerca;
+        }
+      }
+    }
+  }
+}
+
+function mostrarMensajeFinal(texto) {
+  const mensajeDiv = document.getElementById("mensaje-final");
+  const textoMensaje = document.getElementById("texto-mensaje");
+  textoMensaje.textContent = texto;
+  mensajeDiv.style.display = "block";
+}
+
+function reiniciarJuego() {
+  document.getElementById("mensaje-final").style.display = "none";
+  iniciar.click(); // Simula hacer clic en "Iniciar"
 }
