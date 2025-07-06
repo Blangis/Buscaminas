@@ -2,13 +2,17 @@ const grid = document.getElementById("cells");
 const select = document.getElementById("dificultad-select");
 const iniciar = document.getElementById("iniciar-juego");
 
-let numFilas = 20;
-let numColumnas = 40;
 let tablero = [];
+let juegoActivo = false;
+let puntaje = 0;
+let minas = 0;
 
 iniciar.addEventListener("click", () => {
   grid.innerHTML = "";
   tablero = [];
+  puntaje = 0;
+  actualizarPuntaje();
+  juegoActivo = true;
 
   const dificultad = select.value;
   if (dificultad === "easy") {
@@ -50,7 +54,7 @@ function iniciarJuego() {
   const minas = Math.floor(totalCeldas * 0.15); // 15%
   addMinas(minas);
 
-  //AgAsignando eventos 
+  //AgAsignando eventos
   for (let f = 0; f < numFilas; f++) {
     for (let c = 0; c < numColumnas; c++) {
       const div = document.getElementById(`cell-${f}-${c}`);
@@ -89,8 +93,10 @@ function addMinas(numMinas) {
           const nf = f + i;
           const nc = c + j;
           if (
-            nf >= 0 && nf < numFilas &&
-            nc >= 0 && nc < numColumnas &&
+            nf >= 0 &&
+            nf < numFilas &&
+            nc >= 0 &&
+            nc < numColumnas &&
             !(i === 0 && j === 0)
           ) {
             tablero[nf][nc].bombasCerca++;
@@ -102,17 +108,25 @@ function addMinas(numMinas) {
 }
 
 function revelarCelda(f, c) {
+  if (!juegoActivo) return;
   const celda = tablero[f][c];
   if (!celda || celda.revelada) return;
 
   celda.revelada = true;
+  puntaje++;
+  actualizarPuntaje();
+
   const div = document.getElementById(`cell-${f}-${c}`);
   div.classList.add("revelada");
 
   if (celda.esBomba) {
     div.classList.add("bomba");
     div.textContent = "💣";
-    alert("¡BOOM! Has perdido.");
+    juegoActivo = false;
+
+    setTimeout(() => {
+      alert("¡BOOM! Has perdido.");
+    }, 100); // Espera 100 milisegundos
     return;
   }
 
@@ -121,14 +135,16 @@ function revelarCelda(f, c) {
     return;
   }
 
-  // Expansión 3x3 
+  // Expansión 3x3
   for (let i = -1; i <= 1; i++) {
     for (let j = -1; j <= 1; j++) {
       const nf = f + i;
       const nc = c + j;
       if (
-        nf >= 0 && nf < numFilas &&
-        nc >= 0 && nc < numColumnas &&
+        nf >= 0 &&
+        nf < numFilas &&
+        nc >= 0 &&
+        nc < numColumnas &&
         !(i === 0 && j === 0)
       ) {
         const vecino = tablero[nf][nc];
@@ -136,11 +152,21 @@ function revelarCelda(f, c) {
         if (!vecino.revelada && !vecino.esBomba) {
           vecino.revelada = true;
           divVecino.classList.add("revelada");
+          puntaje++;
+          actualizarPuntaje();
+
           if (vecino.bombasCerca > 0) {
             divVecino.textContent = vecino.bombasCerca;
+          } else {
+            revelarCelda(nf, nc);
           }
         }
       }
     }
   }
+}
+
+function actualizarPuntaje() {
+  const puntajeEl = document.getElementById("score");
+  puntajeEl.textContent = `Puntaje: ${puntaje}`;
 }

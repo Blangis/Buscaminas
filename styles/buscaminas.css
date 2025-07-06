@@ -1,9 +1,3 @@
-/*Declaro variables css globales*/
-:root {
-  --num-columnas: 40;
-  --num-filas: 20;
-}
-
 h1 {
   text-align: center;
   font-family: "Luckiest Guy", cursive;
@@ -30,18 +24,20 @@ body {
   padding-bottom: 2%;
 }
 
-.score {
+#score {
   width: 80%;
   height: 15%;
   background-color: rgba(241, 7, 7, 0.418);
   color: white;
   align-items: center;
   text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .cell {
   font-family: monospace;
   font-size: 0.9em;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,8 +45,6 @@ body {
 
 .cells {
   display: grid;
-  grid-template-columns: repeat(var(--num-columnas), 1fr);
-  grid-template-rows: repeat(var(--num-filas), 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   width: 80%;
@@ -71,11 +65,11 @@ body {
 }
 
 .cell.bomba {
-  background-color: #ec1d1d;
+  background-color: #b44139 !important;
 }
 
 .cell.revelada {
-  background-color: aquamarine;
+  background-color: rgb(245, 248, 247);
 }
 
 footer {
@@ -93,14 +87,14 @@ footer {
 .dificultad {
   background: linear-gradient(
     90deg,
-    rgba(240,160,150,1) 0%,
-    rgba(170,200,178,1) 63%,
-    rgba(100, 50, 40,1) 100%
+    rgba(240, 160, 150, 1) 0%,
+    rgba(170, 200, 178, 1) 63%,
+    rgba(100, 50, 40, 1) 100%
   );
   text-align: center;
   font-family: Gill Sans;
-  font-size:small;
-  padding : 10px;
+  font-size: small;
+  padding: 10px;
   margin: 10px auto;
   width: 50%;
 }

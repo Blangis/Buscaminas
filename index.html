@@ -15,27 +15,24 @@
     />
   </head>
 
-  <header>
-    <h1>Buscaminas</h1>
-  </header>
-  
-
   <body>
+    <header>
+      <h1>Buscaminas</h1>
+    </header>
 
     <div class="dificultad">
-    <h2>Selecciona la dificultad</h2>
-    <select id="dificultad-select">
-      <option value="easy">Fácil (10x10)</option>
-      <option value="medium" selected>Media (20x40)</option>
-      <option value="hard">Difícil (30x60)</option>
-    </select>
-    <button id="iniciar-juego">Iniciar</button>
+      <h2>Selecciona la dificultad</h2>
+      <select id="dificultad-select">
+        <option value="easy">Fácil (10x10)</option>
+        <option value="medium" selected>Media (20x40)</option>
+        <option value="hard">Difícil (30x60)</option>
+      </select>
+      <button id="iniciar-juego">Iniciar</button>
     </div>
 
-
     <div class="container">
-      <div class="score">
-        <p>Aquí pensé el puntaje</p>
+      <div id="score">
+        <p>Puntaje</p>
       </div>
       <div class="cells" id="cells"></div>
     </div>
@@ -43,11 +40,11 @@
       <p>
         Realizado por: <br />
         <a href="https://github.com/Blangis" target="_blank">Giselle Licona</a>
-        y 
-        <a href="https://github.com/Saiko-E"  target="_blank">Erick Nava</a>
+        y
+        <a href="https://github.com/Saiko-E" target="_blank">Erick Nava</a>
       </p>
     </footer>
-    
+
     <script src="javascript/buscaminas.js"></script>
   </body>
 </html>
