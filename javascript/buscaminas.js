@@ -6,6 +6,8 @@ let tablero = [];
 let juegoActivo = false;
 let puntaje = 0;
 let minas = 0;
+let numFilas = 0;
+let numColumnas = 0;
 
 iniciar.addEventListener("click", () => {
   grid.innerHTML = "";
@@ -13,7 +15,7 @@ iniciar.addEventListener("click", () => {
   puntaje = 0;
   actualizarPuntaje();
   juegoActivo = true;
-
+  mostrarRecord();
   const dificultad = select.value;
   if (dificultad === "easy") {
     numFilas = 10;
@@ -25,9 +27,17 @@ iniciar.addEventListener("click", () => {
     numFilas = 30;
     numColumnas = 60;
   }
+  const estilos = getComputedStyle(document.documentElement);
+  const anchoTablero = parseFloat(estilos.getPropertyValue('--ancho-tablero'));
+  const altoTablero = parseFloat(estilos.getPropertyValue('--alto-tablero'));
 
-  grid.style.gridTemplateColumns = `repeat(${numColumnas}, 1fr)`;
-  grid.style.gridTemplateRows = `repeat(${numFilas}, 1fr)`;
+  const anchoCelda = anchoTablero / numColumnas;
+  const altoCelda = altoTablero / numFilas;
+
+
+  grid.style.gridTemplateColumns = `repeat(${numColumnas}, ${anchoCelda}px)`;
+  grid.style.gridTemplateRows = `repeat(${numFilas}, ${altoCelda}px)`;
+
 
   iniciarJuego();
 });
@@ -41,6 +51,7 @@ function iniciarJuego() {
         esBomba: false,
         revelada: false,
         bombasCerca: 0,
+        banderin: false
       });
     }
     tablero.push(fila);
@@ -58,10 +69,18 @@ function iniciarJuego() {
   for (let f = 0; f < numFilas; f++) {
     for (let c = 0; c < numColumnas; c++) {
       const div = document.getElementById(`cell-${f}-${c}`);
+
+      // Click izquierdo
       div.addEventListener("click", () => {
         revelarCelda(f, c);
       });
-    }
+
+      // Click derecho (banderín)
+      div.addEventListener("contextmenu", (e) => {
+        e.preventDefault(); // evita el menú del navegador
+        Banderin(f, c);
+      });
+  }
   }
 }
 
@@ -108,13 +127,23 @@ function addMinas(numMinas) {
 }
 
 function revelarCelda(f, c) {
-  if (!juegoActivo) return;
+  
   const celda = tablero[f][c];
+  actualizarPuntaje();
+  if (celda.banderin) return;
+  if (!juegoActivo) return;
   if (!celda || celda.revelada) return;
 
   celda.revelada = true;
   puntaje++;
   actualizarPuntaje();
+
+  if(checarVictoria()){
+    juegoActivo = false;
+    mostrarMensajeFinal("¡¡¡¡FELICIDADES.Has ganado !!!!");
+    actualizarRecord();
+    return;
+  }
 
   const div = document.getElementById(`cell-${f}-${c}`);
   div.classList.add("revelada");
@@ -123,6 +152,8 @@ function revelarCelda(f, c) {
     div.classList.add("bomba");
     div.textContent = "💣";
     juegoActivo = false;
+
+    actualizarRecord();
 
     setTimeout(() => {
       revelarTodo();
@@ -170,7 +201,7 @@ function revelarCelda(f, c) {
 }
 
 function actualizarPuntaje() {
-  const puntajeEl = document.getElementById("score");
+  const puntajeEl = document.getElementById("puntaje-text");
   puntajeEl.textContent = `Puntaje: ${puntaje}`;
 }
 
@@ -205,4 +236,59 @@ function mostrarMensajeFinal(texto) {
 function reiniciarJuego() {
   document.getElementById("mensaje-final").style.display = "none";
   iniciar.click(); // Simula hacer clic en "Iniciar"
+}
+
+
+function Banderin(f, c) {
+  if (!juegoActivo) return;
+
+  const celda = tablero[f][c];
+  const div = document.getElementById(`cell-${f}-${c}`);
+
+  if (celda.revelada) return;
+
+  if (celda.banderin) {
+    celda.banderin = false;
+    div.classList.remove("banderin");
+    div.textContent = "";
+  } else {
+    celda.banderin = true;
+    div.classList.add("banderin");
+    div.textContent = "🚩";
+  }
+    if(checarVictoria()){
+    juegoActivo = false;
+    mostrarMensajeFinal("¡¡¡¡FELICIDADES.Has ganado !!!!");
+    actualizarRecord();
+  }
+}
+
+function actualizarRecord(){
+  const recordGuardado = localStorage.getItem("mejorRecord");
+  if(!recordGuardado || puntaje > parseInt(recordGuardado)){
+    localStorage.setItem("mejorRecord", puntaje);
+  }
+}
+
+function mostrarRecord(){
+  const recordGuardado = localStorage.getItem("mejorRecord") || 0;
+  document.getElementById("record").textContent = `Mejor récord: ${recordGuardado}`;
+}
+
+
+function checarVictoria(){
+  for (let f = 0; f < numFilas; f++){
+    for (let c = 0; c < numColumnas; c++){
+      const celda = tablero[f][c];
+      if(celda.esBomba && !celda.banderin){
+                console.log(`Bomba sin banderín en (${f}, ${c})`);
+        return false;
+      }
+      if (!celda.esBomba && !celda.revelada){
+                console.log(`Celda segura no revelada en (${f}, ${c})`);
+        return false;
+      }
+    }
+  }
+  return true;
 }
