@@ -1,8 +1,10 @@
+/* Variables globales, ocupan el -- para declararse */
 :root {
   --ancho-tablero: 2600px;
   --alto-tablero: 1200px;
 }
 
+/* para el h1*/
 h1 {
   text-align: center;
   font-family: "Luckiest Guy", cursive;
@@ -11,17 +13,19 @@ h1 {
   color: rgb(40, 129, 117);
 }
 
+/* Para el body */
 body {
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(
+  display: flex; /*dice que el display se felxeara */
+  flex-direction: column;  /* direccion del felx*/
+  background: linear-gradient(    /* efecto para que el bacgron de muestre un efecto de gradiante*/
     90deg,
-    rgba(250, 165, 165, 1) 0%,
+    rgba(250, 165, 165, 1) 0%,    /* configuracion de colores*/
     rgba(176, 235, 197, 1) 62%,
     rgba(219, 209, 116, 1) 100%
   );
 }
 
+/* Configuración para la clase container*/
 .container {
   display: flex;
   flex-direction: column;
@@ -29,19 +33,21 @@ body {
   padding-bottom: 2%;
 }
 
+/*Al ser un id se pone el #*/
 #score {
-  width: 80%;
-  height: 15%;
-  background-color: rgba(241, 7, 7, 0.418);
-  color: white;
-  align-items: center;
-  text-align: center;
+  width: 80%;                                /* El ancho del elemento será el 80% del ancho de su contenedor padre */
+  height: 15%;                               /* La altura será el 15% de la altura del contenedor padre */
+  background-color: rgba(241, 7, 7, 0.418);   /* Fondo de color rojo con opacidad (el último valor es el alfa: 0.418) */
+  color: white;                              /* El color del texto será blanco */
+  align-items: center;                       /* (NO tiene efecto aquí) Alinea los elementos hijos en el centro del eje vertical dentro de un contenedor flex */
+  text-align: center;                        /* Alinea el texto horizontalmente al centro */
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
+/* Para la clase cell*/
 .cell {
   font-family: monospace;
-  font-size: 0.9em;
+  font-size: 0.9em; /* tamaño de la fuente*/
   line-height: 1;
   display: flex;
   align-items: center;
@@ -55,6 +61,7 @@ body {
   cursor: pointer;
 }
 
+/* para la clase cells*/
 .cells {
   display: grid;
   grid-column-gap: 0px;
@@ -66,14 +73,17 @@ body {
   line-height: 32px; 
 }
 
+/* subclase bumba para cell*/
 
 .cell.bomba {
   background-color: #b44139 !important;
 }
+/* subclase revelada para cell*/
 
 .cell.revelada {
   background-color: rgb(245, 248, 247);
 }
+/* subclase banderin para cell*/
 
 .cell.banderin {
   background-color: #ffe28a !important;
@@ -81,6 +91,7 @@ body {
   font-weight: bold;
 }
 
+/* diseño para el futter*/
 footer {
   background: linear-gradient(
     90deg,
@@ -93,6 +104,7 @@ footer {
   font-size: small;
 }
 
+/* dseño para la clase dificultad*/ 
 .dificultad {
   background: linear-gradient(
     90deg,
@@ -108,17 +120,20 @@ footer {
   width: 50%;
 }
 
+/* diseño para el id de mensaje final*/
 #mensaje-final {
   display: none;
   text-align: center;
   margin-top: 20px;
 }
 
+/* diseño para el id de del texto del mensaje*/
 #texto-mensaje {
   font-weight: bold;
   font-size: 1.2em;
 }
 
+/*sieño para el botton-29*/
 .button-29 {
   align-items: center;
   appearance: none;
@@ -133,7 +148,7 @@ footer {
     rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
   box-sizing: border-box;
   color: #fff;
-  cursor: pointer;
+  cursor: pointer; /* hace que el cursor sea un puntero */
   display: inline-flex;
   font-family: "JetBrains Mono", monospace;
   height: 48px;
@@ -154,18 +169,28 @@ footer {
   will-change: box-shadow, transform;
   font-size: 18px;
 }
-
+/* Cuando el botón con clase .button-29 está en foco  */
 .button-29:focus {
-  box-shadow: #e03c65 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
-    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #e03c80 0 -3px 0 inset;
-}
-.button-29:hover {
-  box-shadow: rgba(18, 216, 84, 0.4) 0 4px 8px,
-    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #553ce0 0 -3px 0 inset;
-  transform: translateY(-2px);
+  box-shadow: 
+    #e03c65 0 0 0 1.5px inset,           /* sombra interior roja con un borde de 1.5px */
+    rgba(45, 35, 66, 0.4) 0 2px 4px,    /* sombra exterior con color semitransparente */
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px,  /* sombra más difusa y más grande */
+    #e03c80 0 -3px 0 inset;             /* otra sombra interior para efecto más complejo */
 }
 
-.button-29:active {
-  box-shadow: #3ce0e0 0 3px 7px inset;
-  transform: translateY(2px);
+/* Cuando el mouse pasa por encima del botón con clase .button-29 */
+.button-29:hover {
+  box-shadow: 
+    rgba(18, 216, 84, 0.4) 0 4px 8px,  /* sombra verde translúcida */
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, /* sombra difusa */
+    #553ce0 0 -3px 0 inset;             /* sombra interior con tono azul */
+  transform: translateY(-2px);/* simulación de elevarse */
 }
+
+/* Cuando el botón está activo  */
+.button-29:active {
+  /* Cambia la sombra  */
+  box-shadow: #3ce0e0 0 3px 7px inset;
+  transform: translateY(2px); /* simulación de presionado*/
+}
+
